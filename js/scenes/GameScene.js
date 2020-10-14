@@ -9,12 +9,6 @@ class GameScene extends Phaser.Scene {
             volume: 0.2
         }); //określamy głośność i czy powtarzać dźwięk
 
-
-        var button = this.add.image(100, 100, 'button1'); // metodę add.image() używamy do nie animowanych obrazków
-        button.setOrigin(0.5, 0.5);
-
-        this.add.sprite(300, 100, 'button1'); // sprajty służą do animacji
-
         this.chest = new Chest(this, 300, 300, 'items', 0);
 
         this.wall = this.physics.add.image(500, 100, 'button1');
