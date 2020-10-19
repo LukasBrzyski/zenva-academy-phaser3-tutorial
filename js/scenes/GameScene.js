@@ -3,6 +3,10 @@ class GameScene extends Phaser.Scene {
         super('Game');
     }
 
+    init() {
+        this.scene.launch('Ui'); //jeśli używamy 'launch' zamiast 'start', to uruchamiamy daną scenę równolegle z inną
+    }
+
     create() {
         var goldPickupAudio = this.sound.add('goldSound', {
             loop: false,

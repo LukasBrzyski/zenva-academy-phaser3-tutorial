@@ -18,6 +18,6 @@ class BootScene extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start('Title'); //uruchamiamy scenę Game, bo jak nie to wczytywany jest tylko pierwszy element z tablicy scene[]
+        this.scene.start('Game'); //uruchamiamy scenę Game, bo jak nie to wczytywany jest tylko pierwszy element z tablicy scene[]
     }
 }
