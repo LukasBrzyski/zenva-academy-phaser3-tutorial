@@ -12,9 +12,9 @@ var config = {
         default: 'arcade',
         arcade: {
             debug: true,
-            gravity: {
-                y: 5
-            }
+            // gravity: {
+            //     y: 5
+            // }
         }
     }
 };

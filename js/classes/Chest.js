@@ -1,8 +1,8 @@
 class Chest extends Phaser.Physics.Arcade.Image {
     constructor(scene, x, y, key, frame) {
         super(scene, x, y, key, frame);
-        this.scene = scene;
-        this.coins = 10;
+        this.scene = scene; //scena do której dodamy ten obiekt
+        this.coins = 10; //liczba monet w skrzyni
 
         //enable physics
         this.scene.physics.world.enable(this);
