@@ -5,6 +5,7 @@ class GameScene extends Phaser.Scene {
 
     init() {
         this.scene.launch('Ui'); //jeśli używamy 'launch' zamiast 'start', to uruchamiamy daną scenę równolegle z inną
+        this.score = 0;
     }
 
     create() {
@@ -32,7 +33,23 @@ class GameScene extends Phaser.Scene {
     }
 
     createChests() {
-        this.chest = new Chest(this, 300, 300, 'items', 0);
+        //create a chest group
+        this.chests = this.physics.add.group();
+        //create chest positions array
+        this.chestPositions = [[100, 100], [200, 200], [300, 300], [400, 400], [500, 500]];
+        //specify the max number of chest we can have
+        this.maxNumberOfChests = 3;
+        //spawn a chest
+        for (let i = 0; i < this.maxNumberOfChests; i += 1) {
+            this.spawnChest();
+        }
+    }
+
+    spawnChest() {
+        const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)];
+        const chest = new Chest(this, location[0], location[1], 'items', 0);
+        //add chest to chests group
+        this.chests.add(chest);
     }
 
     createWalls() {
@@ -46,15 +63,19 @@ class GameScene extends Phaser.Scene {
 
     addCollisions() {
         this.physics.add.collider(this.player, this.wall); //kolizje postaci z innymi obiektami
-        this.physics.add.overlap(this.player, this.chest, this.collectChest, null, this); //Kolizje postaci z innymi obiektami. Kiedy postać dotknie skrzynię, ta znika i słyszymy dźwięk
+        this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this); //Kolizje postaci z innymi obiektami. Kiedy postać dotknie skrzynię, ta znika i słyszymy dźwięk
     }
 
     collectChest(player, chest) {
         //play gold pickup sound
         this.goldPickupAudio.play();
+        //update our score
+        this.score += chest.coins;
         //update score in the UI
-        this.events.emit('updateScore', chest.coins);
+        this.events.emit('updateScore', this.score);
         //destroy the chest game object
         chest.destroy();
+        //spawn a new chest
+        this.time.delayedCall(1000, this.spawnChest, [], this);
     }
 }
