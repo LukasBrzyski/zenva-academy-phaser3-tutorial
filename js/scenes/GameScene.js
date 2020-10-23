@@ -47,9 +47,17 @@ class GameScene extends Phaser.Scene {
 
     spawnChest() {
         const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)];
-        const chest = new Chest(this, location[0], location[1], 'items', 0);
-        //add chest to chests group
-        this.chests.add(chest);
+
+        let chest = this.chests.getFirstDead();
+        
+        if (!chest) {
+            const chest = new Chest(this, location[0], location[1], 'items', 0);
+            //add chest to chests group
+            this.chests.add(chest);
+        } else {
+            chest.setPosition(location[0], location[1]);
+            chest.makeActive();
+        }
     }
 
     createWalls() {
@@ -73,8 +81,8 @@ class GameScene extends Phaser.Scene {
         this.score += chest.coins;
         //update score in the UI
         this.events.emit('updateScore', this.score);
-        //destroy the chest game object
-        chest.destroy();
+        //make chest game object inactive
+        chest.makeInactive();
         //spawn a new chest
         this.time.delayedCall(1000, this.spawnChest, [], this);
     }

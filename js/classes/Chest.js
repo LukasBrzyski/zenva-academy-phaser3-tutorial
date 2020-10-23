@@ -9,4 +9,16 @@ class Chest extends Phaser.Physics.Arcade.Image {
         //dodanie gracza do istniejącej sceny
         scene.add.existing(this); //jeśli nie, to gracz nie byłby powiązany z obiektem gry (który tworzony jest gdzie indziej)
     }
+
+    makeActive() {
+        this.setActive(true);
+        this.setVisible(true);
+        this.body.checkCollision.none = false;
+    }
+
+    makeInactive() {
+        this.setActive(false);
+        this.setVisible(false);
+        this.body.checkCollision.none = true;
+    }
 }
